@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html langt="de">
+	<!-- First Try -->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title> WEBGIS Kaufinformation</title>
+	</head>
+		<body>
+			
+			<h1>Kaufinformation WEB-GIS Link Seite 2</h1>
+			<a href="index.html">zurück zum index</a>
+			<p>
+				hier sollte ein link zu Sonic Riot Facebookband sein	
+			</p>
+			Ergebnis=
+			<script>
+				/* Kommentar in JavaScript*/
+				alert("berechnung startet nach OK");
+				var summe1 = 1;
+				var summe2 = 2;
+				 document.write(summe1+summe2);
+				
+			</script>
+			
+			<p>
+				Ein neues Script
+				<script>
+					var NICHT_VERAENDERN = 356;
+					var string_variable = "1123456";
+					var int_variable = 666
+					/* 
+					string string_variable = "1123456";
+					int int_variable = 666
+					var ergebnis = string_variable + int_variable; --> geht nicht 
+					document.write(ergebnis);*/
+					document.write(NICHT_VERAENDERN / summe2);
+					document.write(" _ " + summe2 + "\n");
+					document.write(string_variable + int_variable);		//--> type-cast beider variablentypen zu string
+					
+				</script>
+			</p>
+			
+			<p>
+				Gleitkomma Script
+				
+				<script>
+					var zahl1 = 7;
+					var divisor = 11;
+					var ergebnis;
+					
+					ergebnis = 7 / 11;
+					document.write(ergebnis.toFixed(2));
+					
+				</script>
+			
+			</p>
+			
+			<p>
+				JavaScript Funktionsdeklaration
+					
+				<script>
+					function testErgebnis(){
+						
+						var input_var1 = 66;
+						var input_var2 = 100;
+						var func_ergebnis = input_var1 * input_var2;
+						
+						document.getElementById("test_ausgabe").innerHTML = func_ergebnis;	
+						document.getElementById("zweite").innerHTML = func_ergebnis - 3333;	
+					}
+					
+					function testeFehler(){
+						var element = document.getElementById("test");
+						element.innerHTML = "Hallo Paul"; 
+					}
+					
+					function stringReihe(){
+						
+						var erster = "Hallo ";
+						var name = "Paul";
+						var rest = ", wie geht es dir";
+						var full = erster + name + rest;
+						document.getElementById("eins").innerHTML = full.charAt(0);
+						document.getElementById("drei").innerHTML = full.charAt(3);
+					}
+					
+					
+					
+				</script>
+							
+			</p>
+			<p>
+				JavaScript Funktionsaufruf 
+				<button type="button" onclick="testErgebnis();">Klick Mich!</button>
+				
+			</p>
+			<p>
+				Funktionsergebnis : <span id="test_ausgabe"></span><br><span id="zweite"></span>
+				
+			</p>
+			<p>
+				StringFunktionsaufruf: <button onclick="stringReihe();">Klick Mich!</button><span id="eins"></span><br>
+				<span id="drei"></span>
+			</p>
+			
+			
+			<!-- ====================================================================================================== -->
+			
+			<p>
+				<!-- Deklaration interaktive texteingabe-->
+				<script>
+					
+					function dreieck(){
+						
+						var seite_a = parseInt(document.getElementById("seitea").value);
+						var seite_b = parseInt(document.getElementById("seiteb").value);
+						var seite_c = parseInt(document.getElementById("seitec").value);
+						
+						var umfang = seite_a + seite_b + seite_c;
+						document.getElementById("umfang").innerHTML = umfang;
+					}
+					
+				</script>
+			Seite A: <input type="text" id="seitea"/><br>
+			Seite B: <input type="text" id="seiteb"/><br>
+			Seite C: <input type="text" id="seitec"/><br>
+			Der Umfang beträgt <span id="umfang"></span> cm.<br>
+			<button type="button" onclick="dreieck();">Umfang berechnen</button>
+			</p>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</body>
+</html>
