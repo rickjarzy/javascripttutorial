@@ -12,16 +12,7 @@
 			<p>
 				hier sollte ein link zu Sonic Riot Facebookband sein	
 			</p>
-			Ergebnis=
-			<script>
-				/* Kommentar in JavaScript*/
-				alert("berechnung startet nach OK");
-				var summe1 = 1;
-				var summe2 = 2;
-				 document.write(summe1+summe2);
-				
-			</script>
-			
+
 			<p>
 				Ein neues Script
 				<script>
@@ -130,9 +121,113 @@
 			
 			
 			
+			<!-- ====================================================================================================== -->
+			
+			<p>
+				<!-- Deklaration interaktive texteingabe-->
+				<script>
+					
+					function einkauf(){
+						
+						var eingabe = document.getElementById("eingabe");
+						var neuesElement = eingabe.value;
+						
+						var liste = document.getElementById("liste");
+						liste.innerHTML = liste.innerHTML + "<li>" + neuesElement + "</li>";
+						eingabe.value = "";  // Leeren des Eingabefeldes
+						
+					}
+				
+				</script>
+				
+				<ul id="liste"></ul>
+				<span id="liste"></span>
+				<input type="text" id="eingabe"><br>
+				<button type="button" onclick="einkauf();"> Eikaufsliste erstellen</button>
+				
+				
+			</p>
 			
 			
 			
+			<p>
+				<script>
+					function rechne(){
+						
+						var aufgabe = document.getElementById("rechnung").value;
+						var plusPosition = aufgabe.indexOf("+");
+						var summand1 = parseInt(aufgabe.substring(0,plusPosition));
+						var summand2 = parseInt(aufgabe.substring(plusPosition + 1));
+						
+						document.getElementById("ergebnis").innerHTML = summand1 + summand2;
+						
+					}
+				
+				</script>
+				
+				Rechnung : <input type="text" id="rechnung"><br>
+				Ergebnis : <span id="ergebnis"></span><br>
+				<button type="button" onclick="rechne();">Starte berechnung</button>
+				
+			</p>
+			
+			
+			
+			<p>
+				
+				<script>
+					
+					function pruefeFormular(){
+						pruefeVorname();
+						pruefeNachname();
+					}
+					
+					function fehlerVorname(message){
+						document.getElementById("status_vorname").innerHTML = message;
+					}
+					function fehlerNachname(message){
+						document.getElementById("status_nachname").innerHTML = message;
+					}
+					
+					function pruefeVorname(){
+						var vorname = document.getElementById("vorname").value;
+						
+						if (vorname == ""){
+							fehlerVorname("Kein Vorname!");
+						} else if (vorname == "wixer"){
+							fehlerVorname("nein nein nein");
+						} else {
+							fehlerVorname("");
+						}	
+					}
+					
+					function pruefeNachname(){
+						var nachname = document.getElementById("nachname").value;
+						
+						if (nachname == ""){
+							fehlerNachname("Nachname Fehlt!");
+						} else {
+							fehlerNachname("");
+						}
+						
+					}
+					
+					
+
+				
+				</script>
+				
+				
+				<div id="fehler"></div>
+				<label for="vorname">Vorname: </label><input type="text" id="vorname" name="vorname"><span id="status_vorname"></span><br/>
+				<label for="nachname">Nachname: </label><input type="text" id="nachname" name="nachname"><span id="status_nachname"></span><br/>
+				<label for="email">Email: </label><input type="text" id="email" name="email"><br/>
+				
+				<button type="button" onclick="pruefeFormular();">Prüfe Formular</button>
+			
+			
+			
+			</p>
 			
 			
 			
