@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title> WEBGIS Kaufinformation</title>
+		<script src="sortierung.js"></script>
 	</head>
 		<body>
 			
@@ -24,8 +25,8 @@
 					int int_variable = 666
 					var ergebnis = string_variable + int_variable; --> geht nicht 
 					document.write(ergebnis);*/
-					document.write(NICHT_VERAENDERN / summe2);
-					document.write(" _ " + summe2 + "\n");
+					document.write(NICHT_VERAENDERN / 4);
+					document.write(" _ " + 5 + "\n");
 					document.write(string_variable + int_variable);		//--> type-cast beider variablentypen zu string
 					
 				</script>
@@ -232,31 +233,8 @@
 
 			<p>
 
-				<script id="umwandlung">
-
-					var inpurt_array = ["kjh", "akjwsfh", "halt", "ajhskjfhaskjhfkjahfkjh", "98763kmsnmdg"];					
-
-					function sortierung(array1){
-						
-						var return_string = "";
-
-						for (var i = 0; i < array1.length; i++)
-						{	
-							return_string += array1[i] + "; ";
-
-						}
-
-						return return_string;
-					}
-
-					var ergebnis = document.getElementById("ergebnis-bereich");
-					ergebis.innerHTML = sortierung(inpurt_array);
-
-					
-				</script>
-
 			hier ist der umgewandelte array: <span id="ergebnis-bereich"></span><br>
-			<button type="button" onclick="umwandlung">Starte umwandlung</button>
+			<button type="button" onclick="sortierung()">Starte umwandlung</button>
 
 
 			</p>
