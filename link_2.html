@@ -229,23 +229,37 @@
 			
 			</p>
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+			<p>
+
+				<script id="umwandlung">
+
+					var inpurt_array = ["kjh", "akjwsfh", "halt", "ajhskjfhaskjhfkjahfkjh", "98763kmsnmdg"];					
+
+					function sortierung(array1){
+						
+						var return_string = "";
+
+						for (var i = 0; i < array1.length; i++)
+						{	
+							return_string += array1[i] + "; ";
+
+						}
+
+						return return_string;
+					}
+
+					var ergebnis = document.getElementById("ergebnis-bereich");
+					ergebis.innerHTML = sortierung(inpurt_array);
+
+					
+				</script>
+
+			hier ist der umgewandelte array: <span id="ergebnis-bereich"></span><br>
+			<button type="button" onclick="umwandlung">Starte umwandlung</button>
+
+
+			</p>
+					
 		</body>
 </html>
