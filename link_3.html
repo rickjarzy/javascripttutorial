@@ -30,6 +30,44 @@
             }
 
         </script>
+        <script>
+            var xmlhttp = null;
+
+            function recalculate(str){
+                
+                if (window.XMLHttpRequest){
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else{
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.open("GET", "calculate.php?meter="+str,true);
+                xmlhttp.onreadystatechange = parseRecalculate;  // Callback Funktion
+                xmlhttp.send();
+            }
+
+
+            function parseRecalculate(){
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                    // Antwort des Servers
+                    var xml = xmlhttp.responseXML;
+                    var meilen_response = xml.getElementsByTagName("meilen")[0];
+                    var yard_response = xml.getElementsByTagName("yard")[0];
+
+
+                    document.getElementsById("meilen").value = meilen_response.firstChild.nodeValue;
+                    document.getElementById("yard").value = yard_response.firstChild.nodeValue;
+                }
+                else{
+                    document.getElementById("meilen").value = 0;
+                    documen.getElementById("yard").value = 0;
+                }
+
+            }
+        
+        </script>
+
+
 	</head>
         <body onload="zeitstempel()">            
             <h1>Ajax tests</h1>
@@ -40,6 +78,24 @@
             <!-- Zeit die beim Seitenladen angezeigt wird -->
             <p id="dynamic02"></p>
 
+
+            <h1>Umrechnen von Einheiten</h1>
+            <form>
+                <fieldset>
+                    <legend>Meter in Meilen umrechnen</legend>
+                    <label>Meter: </label>
+                    <input type="number" id="meter" placeholder="Wert in Meter" 
+                        onmouseup="recalculate(this.value);"> m
+
+                    <br><label>Meilen: </label>
+                    <input type="number" id="meilen" placeholder="Wert in Meilen" readonly> mi
+                    
+                    <br><label>Yard: </label>
+                    <input type="number" id="yard" placeholder="Wert in Yard" readonly> yds
+                </fieldset>
+
+
+            </form>
 
         </body>
 </html>
