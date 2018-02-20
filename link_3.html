@@ -3,7 +3,8 @@
 	<!-- First Try -->
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title> AJAX Tests</title>
+        <title> AJAX Tests</title>
+        <script src="js/jquery-3.3.1.js"></script>
 		<script>
             function changeContent(){
                 var xmlhttp;
@@ -41,7 +42,7 @@
                 else{
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-                xmlhttp.open("GET", "calculate.php?meter="+str,true);
+                xmlhttp.open("GET", "calculate.php?meter="+str,true);                
                 xmlhttp.onreadystatechange = parseRecalculate;  // Callback Funktion
                 xmlhttp.send();
             }
@@ -53,18 +54,170 @@
                     var xml = xmlhttp.responseXML;
                     var meilen_response = xml.getElementsByTagName("meilen")[0];
                     var yard_response = xml.getElementsByTagName("yard")[0];
-
-
-                    document.getElementsById("meilen").value = meilen_response.firstChild.nodeValue;
+                    
+                    document.getElementById("meilen").value = meilen_response.firstChild.nodeValue;
                     document.getElementById("yard").value = yard_response.firstChild.nodeValue;
                 }
                 else{
                     document.getElementById("meilen").value = 0;
-                    documen.getElementById("yard").value = 0;
+                    document.getElementById("yard").value = 0;
                 }
+            }
+            function createJson(){
+                var test_jsom = [
+                {"band":"Sonic Riot", "mitglieder":5},
+                {"band":"Hard Excess", "mitglieder":4},
+                {"band":"Shotdown", "mitglieder":5},
+                                ]
+                console.log(test_jsom);
+                console.log(test_jsom.length)
+
+                // call function to show info in DOM
+                readJSON(test_jsom);
 
             }
-        
+            
+            function readJSON(object){
+                
+                var return_string_list = "<ul>";
+                for(var i = 0; i < object.length; i++){
+                    return_string_list += "<li>Band " + object[i].band + " hat " + object[i].mitglieder + "Mitglieder</li>";
+                }
+                document.getElementById("json-test").innerHTML = return_string_list + "</ul>";
+
+            }
+
+
+            function readJsonFromFile(){
+                
+                console.log("Called readJsonFromFile");
+                
+                //variablen deklaration
+                var url = "data.json";
+                var xmlhttp = new XMLHttpRequest();
+                console.log(xmlhttp);
+
+                //1. deklariere hier welche reaktion passieren soll wenn die anfrage an den server gelingt oder nicht
+                xmlhttp.onreadstatechange = function () {
+                    //wenn erfolgreich - sprich datei wird gefunden
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+
+                        // war die anfrage erfolgreich parse String in JSON
+                        
+                        var myJsonArr = JSON.parse(xmlhttp.responseText);
+                        console.log(myJsonArr);
+                        // und erstelle ein objekt
+                        myParse(myJsonArr);
+                        
+                    }
+                }
+                
+                //2. führe den call tatsächlich erst jetzt aus
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+                
+                // function die asynchron aufgerufen wird
+                function myParse(arr){
+
+                    // das json object soll dann als string wieder im vorgesehenen paragraph 
+                    console.log("started myParse", arr);
+                    var outString = "<ul>";
+                    for(var i = 0; i < arr.length; i++){
+                        outString += "<li>Band: " + arr[i].band + " kostet " + arr[i].gage + "€ da sie " 
+                                     + arr[i].mitglieder + " hat</li>";
+                    }
+
+                    document.getElementById("json-object").innerHTML = outString + "</ul>";
+
+                    console.log(outString);
+                }
+            }
+
+            $(document).ready(function() {
+                $("#btn01").click( function() {
+                    var inp = "Ihre Eingabe: <b>";
+                    inp += $("#inp01").val() +"</b>";
+                    $("#txt").text(inp);
+                    $("#htm").html(inp);
+                    $("#inp01").val("Danke");
+
+                });
+
+                $("#bt02").click( function(){
+                    var backup = "Alter Link: " + $("a").attr("href");
+                    $("a").attr("href", $("#id02").val());
+                    backup += "\nNeuer Link: " + $("a").attr("href") ;
+                    console.log(backup);
+                    $("#p02").text(backup);
+                });
+                $("#bt03").click( function(){
+                    $(".frame").append("<p>Absatz mit append()</p>");
+                });
+                $("#bt04").click( function(){
+                    $(".frame").prepend("<p>Absatz mit prepend()</p>");
+                });
+                $("#bt05").click( function(){
+                    $(".frame").after("<p>Absatz mit after()</p>");
+                });
+                $("#bt06").click(function(){
+                    $(".frame").before("<p>Absatz mit before()</p>");
+                })
+
+
+                $("#bt07").click(function (){
+                    $(".frame").empty();
+                });
+
+                $("#bt08").click(function (){
+                    $(".frame").remove();
+                });
+
+                $("#ajaxClick").click(function(){
+                    $("#ajax").load("server-time.php", function(responseTxt, statusTxt, xhr) {
+                        if (statusTxt == 'success'){
+                            $("#ajaxAnswere").text("PHP Script Erfolgreich geladen");
+                            console.log(xhr);
+                            console.log(statusTxt);
+                            console.log(responseTxt);
+                        }
+                        if (statusTxt == 'error'){
+                            $("#ajaxAnswere").text("Fehler:  " + xhr.status + " : " + xhr.statusTxt);
+                            console.log(xhr);
+                            console.log(statusTxt);
+                            console.log(responseTxt);
+                        }
+                    });
+                });
+
+            $("#meterJQ").click( function(){
+                // schicke ans php script den wert aus meter-inputfeld
+                console.log("meterJQ is gedrückt");
+                // post(function, data, callbackfunction)
+                $.post("calculate.php", {meter:$("#meterJQ").val()} ,
+                      function(data, status){
+                          if (status == "success"){
+                              // nehme wert aus xml response vom php script
+                              console.log("Erfolgreich JQ Ajax");
+                              console.log(data);
+                              var meilen_response = data.getElementsByTagName("meilen")[0];
+                              var yard_response = data.getElementsByTagName("yard")[0];
+                             
+                             // schreibe die values vom xml response in die input-felder von meilen und value
+                            $("#meilenJQ").val(meilen_response.firstChild.nodeValue);
+                            $("#yardsJQ").val(yard_response.firstChild.nodeValue);
+
+                          }
+                          else{
+                              console.log("Keine Meilen und Yards geschrieben");
+                              $("#meilenJQ").val(0);
+                              $("#yardsJQ").val(0);
+                          }
+                      });
+
+
+            });
+            // Document End
+            });
         </script>
 
 
@@ -96,6 +249,72 @@
 
 
             </form>
+
+            <h1>JSON Experiment</h1>
+            <p id="json-test"></p>
+            <button type="button" id="bt01" onclick="createJson();">Show Json</button>
+
+
+            <h1>Create JSON Object</h1>
+            <p id="json-object"></p>
+            <button type="button" onclick="readJsonFromFile();">Read JSON From File</button>
+
+            <h1>Verwenden von JQuery</h1>
+            <p id="jquery-p">Absatz 1 - 
+            </p>
+            <p>Absatz 2 - 
+            </p>
+            <p class="class01">Absatz 3 - </p>
+
+            <h1>JQuery und Input</h1>
+            <input type="text" id="inp01" placeholder="Eingabe machen">
+            <button id="btn01">Auslese</button>
+            <p id="txt">text()-Version</p>
+            <p id="htm">html()-version</p>
+
+            <h1>Ändern von attributen</h1>
+            <input type="text" id="id02" placeholder="URL Adresse">
+            <button id="bt02">Link ändern</button>
+            <p id="p02">Hier geht es weiter
+                <a href="http://www.tangowithdjango.com/book17/chapters/ajax.html">AJAX TUT</a>
+            </p>
+            
+            <h1>Elemente Hinzufügen</h1>
+            <div class="frame">
+                <p>Ein Absatz</p>
+            </div>
+            <button id="bt03"> Am Ende Einfügen</button>
+            <button id="bt04">Am Anfang einfügen</button>
+            <button id="bt05">Hinter dem Ende Hinzufügen</button>
+            <button id="bt06">Vor dem Anfang einfügen</button>
+
+            <h1>Remove und Empty</h1>
+            <dic class="frame">
+                <p>Absatz1</p>
+                <p>Absatz2</p>
+                <p>Absatz3</p>
+            </dic>
+            <button id="bt07">remove</button>
+            <button id="bt08">empty</button>
+
+
+            <h1>JQuery und AJAX</h1>
+            <p id="ajax">Mit Ajax die Serverzeit auslesen</p>
+            <p id="ajaxAnswere"></p>
+            <button id="ajaxClick">Call server time</button>
+
+
+            <h1>Umrechnung mit Ajax und JQuery</h1>
+            <fieldset>
+                <legend>Meter in Meilen und Yard umrechnen</legend>
+                <label>Meter:</label>
+                <input type="number" id="meterJQ" placeholder="Wert in Meter"> m
+                <br><label>Meilen: </label>
+                <input type="number" id="meilenJQ" placeholder="Umrechung Meilen"> ml
+                <br><label>Yards: </label>
+                <input type="number" id="yardsJQ" placeholder="Umrechnung Yards"> yds
+            </fieldset>
+
 
         </body>
 </html>
