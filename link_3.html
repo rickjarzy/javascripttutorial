@@ -220,6 +220,46 @@
             });
         </script>
 
+        
+        // Bilddaten übertragen
+        <script>
+            function addImageWithAjax(){
+                console.log("Add Image With Ajay");
+                var ajaxRequest = new XMLHttpRequest();
+                ajaxRequest.open("GET", "sonic_riot.jpg");
+                //Binary large Objects
+                ajaxRequest.responseType = "blob";
+                // checke ob die antwort erfolgreich war
+                
+                ajaxRequest.onload = function(returnStuff){
+                    if (returnStuff.explicitOriginalTarget.status == 200){
+                        console.log(returnStuff);
+                        
+                        var blob = this.response;
+                        
+                        // erstelle einen Bild tag
+                        var bild = document.createElement("img");
+                        
+                        bild.addEventListener("load", function(returnStuff){
+                            // url löschen wenn man sie nicht mehr braucht
+                            window.URL.revokeObjectURL(returnStuff.target.src);
+                        });
+                        //URL erzeugen
+                        bild.src = window.URL.createObjectURL(blob);
+                        console.log(bild.src)
+                        document.getElementById("Bild").appendChild(bild);
+                        
+                    }
+                    else{
+                        console.log("Else: ")
+                        console.log(returnStuff.explicitOriginalTarget.status);
+                    }
+                };
+                ajaxRequest.send();
+
+            }
+            
+        </script>
 
 	</head>
         <body onload="zeitstempel()">            
@@ -314,6 +354,11 @@
                 <br><label>Yards: </label>
                 <input type="number" id="yardsJQ" placeholder="Umrechnung Yards"> yds
             </fieldset>
+
+            <h1>Bild mit ajax übertragen</h1>
+            <p id="Bild"></p>
+            <button type="button" onclick="addImageWithAjax();">Add Picture</button>
+
 
 
         </body>
